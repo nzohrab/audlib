@@ -69,6 +69,18 @@ public class Effects {
         return new AudioClip(values);
     }
 
+    public AudioClip fadeIn(AudioClip clip) {
+        return fadeIn(clip, 1);
+    }
+
+    public AudioClip expFadeIn(AudioClip clip) {
+        return fadeIn(clip, 2);
+    }
+
+    public AudioClip logFadeIn(AudioClip clip) {
+        return fadeIn(clip, 0.5);
+    }
+
     private AudioClip fadeIn(AudioClip clip, double exponent) {
         List<Double> values = new ArrayList<Double>();
         for(int i = 0; i < clip.getValues().size(); i++) {
@@ -79,12 +91,16 @@ public class Effects {
 
     }
 
-    public AudioClip fadeIn(AudioClip clip) {
-        return fadeIn(clip, 1);
+    public AudioClip fadeOut(AudioClip clip) {
+        return fadeOut(clip, 1);
     }
 
-    public AudioClip expFadeIn(AudioClip clip) {
-        return fadeIn(clip, 2);
+    public AudioClip expFadeOut(AudioClip clip) {
+        return fadeOut(clip, 2);
+    }
+
+    public AudioClip logFadeOut(AudioClip clip) {
+        return fadeOut(clip, 0.5);
     }
 
     private AudioClip fadeOut(AudioClip clip, double exponent) {
@@ -94,14 +110,6 @@ public class Effects {
             values.add(clip.getValues().get(i) * Math.pow(mult, exponent));
         }
         return new AudioClip(values);
-    }
-
-    public AudioClip fadeOut(AudioClip clip) {
-        return fadeOut(clip, 1);
-    }
-
-    public AudioClip expFadeOut(AudioClip clip) {
-        return fadeOut(clip, 2);
     }
 
     public AudioClip joinClips(List<AudioClip> clips) {

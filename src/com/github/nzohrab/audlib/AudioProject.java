@@ -6,11 +6,13 @@ public class AudioProject {
 
     public ClipGenerator generate;
     public Effects effects;
+    public Duration duration;
     public AudioProject(int sampleRate, int bitDepth) {
         this.sampleRate = sampleRate;
         this.bitDepth = bitDepth;
         generate = new ClipGenerator(sampleRate, bitDepth);
         effects = new Effects(sampleRate, bitDepth);
+        duration = new Duration(sampleRate);
     }
 
     public Track addTrack() {
