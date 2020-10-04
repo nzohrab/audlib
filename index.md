@@ -1,37 +1,51 @@
-## Welcome to GitHub Pages
+# audlib - Multi-track audio generation and mixing in Java
+Generate audio samples, mix tracks and play back tracks, and export results as Wav files using Java.
 
-You can use the [editor on GitHub](https://github.com/nzohrab/audlib/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+# Documentation
+Documentation can be viewed **here** //TODO
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+# Examples
+Shepard-Risset Glissandro
+```java
+int projectBitDepth = 32;
+int projectSampleRate = 48000;
+int nLayers = 6;
+int chirpSeconds = 60;
+int overlapSeconds = chirpSeconds / nLayers;
+int nLoops = 5;
+int freq1 = 30;
+int freq2 = 3840;
 
-### Markdown
+AudioProject proj = new AudioProject(projectSampleRate, projectBitDepth);
+Track track = proj.addTrack();
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+AudioClip chirp = proj.generate.logChirp(
+        freq1,
+        freq2,
+        proj.duration.ofSeconds(chirpSeconds)
+);
 
-```markdown
-Syntax highlighted code block
+chirp = proj.effects.expFadeIn(chirp);
+chirp = proj.effects.expFadeOut(chirp);
 
-# Header 1
-## Header 2
-### Header 3
+List<AudioClip> layers = new ArrayList<AudioClip>();
+for (int i = 0; i < nLayers; i++) {
+    List<AudioClip> layerClips = new ArrayList<AudioClip>();
+    layerClips.add(proj.generate.silence(proj.duration.ofSeconds(overlapSeconds * i)));
+    layerClips.add(chirp);
+    layers.add(proj.effects.joinClips(layerClips));
+}
 
-- Bulleted
-- List
+AudioClip shepardSample = proj.effects.clip(
+        proj.effects.mix(layers),
+        overlapSeconds * (nLayers - 1),
+        chirpSeconds
+);
 
-1. Numbered
-2. List
+for (int i = 0; i < nLoops; i++) {
+    track.append(shepardSample);
+}
 
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+track.play();
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/nzohrab/audlib/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
