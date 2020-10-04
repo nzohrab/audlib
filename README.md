@@ -5,7 +5,7 @@ Generate audio samples, mix tracks and play back tracks, and export results as W
 Documentation can be viewed **here** //TODO
 
 # Examples
-Shepard-Risset Glissandro
+## Shepard-Risset Glissandro
 ```java
 int projectBitDepth = 32;
 int projectSampleRate = 48000;
@@ -48,4 +48,3 @@ for (int i = 0; i < nLoops; i++) {
 
 track.play();
 ```
-
