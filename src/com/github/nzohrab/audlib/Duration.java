@@ -14,6 +14,10 @@ public class Duration {
         return sampleRate * numberOfSeconds;
     }
 
+    public int ofMillis(int numberOfMillis) {
+        return sampleRate * numberOfMillis / 1000;
+    }
+
     public int ofMinutes(int numberOfMinutes) {
         return 60 * sampleRate * numberOfMinutes;
     }
