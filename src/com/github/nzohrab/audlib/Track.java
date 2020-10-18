@@ -57,7 +57,9 @@ public class Track{
         byte[] bytes = new byte[nBytes];
         for(AudioClip c : clips) {
             for(Double s : c.getValues()) {
-                long f = (long)(s * (Math.pow(2,bitDepth) / 2)) - 1;
+                long f = (long)(s * (Math.pow(2,bitDepth) / 2));
+
+                f -= Long.signum(f);
 
                 int fLengthInBytes = bitDepth / 8;
                 for(int i = 0; i < fLengthInBytes; i++) {
@@ -89,6 +91,5 @@ public class Track{
         } catch (InterruptedException e) {
             System.out.println(e.toString());
         }
-
     }
 }
