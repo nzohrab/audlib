@@ -16,5 +16,8 @@ public class AudioClip {
         return values;
     }
 
+    public void append(AudioClip clip) {
+        values.addAll(clip.getValues());
+    }
 
 }
